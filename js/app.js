@@ -1,36 +1,36 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('myController', function($scope){
 
-	// console.log("hello angular...");
+var myApp = angular.module('myApp', ["firebase"]);
+myApp.controller('myController', function($scope, $firebaseArray){
+     var database = firebase.database();
+     var ref = database.ref('users');
+ var myProduct = new Firebase("https://angular-crud-application.firebaseio.com/users");
+  
+  $scope.users = $firebaseArray(myProduct);
+  console.log($scope.users);
+  
    $scope.newUser = {};
    $scope.clickedUser = {};
-   $scope.message = "";
-   var users = [
-              {name:'pankaj', fullName:'pankaj kumar gouraw', email:'pgouraw@gmail.com'},
-              {name:'shweta', fullName:'shweta prabhu', email:'shweta@gmail.com'},
-              {name:'subhoo', fullName:'subho deep', email:'deepsubhoo@gmail.com'}
-
-   ];
-   $scope.users = users;
+   $scope.message = ""; 
 
    $scope.saveUser = function(){
-   	// console.log($scope.newUser);
-   	$scope.users.push($scope.newUser);
+    ref.push($scope.newUser);
    	$scope.newUser = {};
    	$scope.message = "new user added successfully !....";
    };
 
    $scope.selectUser = function(user){
-      // console.log(user);
     $scope.clickedUser = user;
    };
 
    $scope.updateUser = function(){
+      $scope.users.$save($scope.clickedUser);
+      console.log($scope.clickedUser);
        $scope.message = "user information updated successfully !...";
    };
 
    $scope.deleteUser = function(){
-      $scope.users.splice($scope.users.indexOf($scope.clickedUser),1);
+      // $scope.users.splice($scope.users.indexOf($scope.clickedUser),1);
+      $scope.users.$remove($scope.clickedUser);
       $scope.message = "user deleted successfully !....";
    };
 
