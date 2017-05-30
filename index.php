@@ -152,7 +152,7 @@
 			      </div>
 			      <div class="modal-body">
 			        <strong style="color:red;">
-			        	Are You Sure want to  {{clickedUser.fullName}}.
+			        	Are You Sure want to delete  {{clickedUser.fullName}}.
 			        </strong>
 			      </div>
 			      <div class="modal-footer">
